@@ -36,7 +36,7 @@ export const T = {
     ],
     services: {
       k: 'الخدمة', h: 'كل ما يحتاجه معرضك للبيع بثقة',
-      lead: 'خدمة متكاملة يتولاها فريق واحد، من تصوير المنتج وحتى ظهوره في منزل العميل.',
+      lead: 'خدمة متكاملة يتولاها فريق واحد، من استلام صور المنتج ومقاساته وحتى ظهوره في منزل العميل.',
       items: [
         ['cube', 'النمذجة ثلاثية الأبعاد', 'تحويل كل منتج إلى نموذج رقمي دقيق بخاماته وألوانه ومقاساته الحقيقية.'],
         ['ar', 'دمج الواقع المعزز', 'زر «شوفها في بيتك» على صفحة كل منتج، يعمل مباشرة من متصفح الهاتف.'],
@@ -50,7 +50,7 @@ export const T = {
       k: 'آلية العمل', h: 'خمس خطوات من التعاقد إلى الإطلاق',
       steps: [
         ['اجتماع تعريفي', 'نحدد المنتجات وعددها ونطاق العمل.'],
-        ['التصوير والقياس', 'تصوير احترافي وأخذ المقاسات الدقيقة لكل قطعة.'],
+        ['استلام الصور والمقاسات', 'ترسلون صور كل قطعة ومقاساتها وفق دليل مبسّط نوفّره لكم.'],
         ['النمذجة', 'بناء النماذج ومراجعتها معكم حتى الاعتماد.'],
         ['الدمج', 'إضافة التجربة إلى المتجر وتجهيز رموز QR.'],
         ['الإطلاق والمتابعة', 'إطلاق رسمي ودعم وتحديثات شهرية.'],
@@ -82,7 +82,7 @@ export const T = {
       k: 'الأسئلة الشائعة', h: 'إجابات واضحة',
       items: [
         ['هل يحتاج العميل إلى تحميل تطبيق؟', 'لا. تعمل التجربة مباشرة من متصفح الهاتف على أجهزة iOS وAndroid الحديثة.'],
-        ['من يتولى التصوير وأخذ المقاسات؟', 'فريقنا يزور المعرض لتصوير المنتجات وقياسها، أو نعمل على الصور والمقاسات التي ترسلونها وفق دليل نوفّره.'],
+        ['ماذا نحتاج منكم لبناء النماذج؟', 'صورًا واضحة لكل قطعة من عدة زوايا مع مقاساتها الدقيقة، ونرسل لكم دليلًا مبسّطًا يوضح طريقة التصوير والقياس بالهاتف.'],
         ['كم تستغرق مدة التنفيذ؟', 'تختلف حسب عدد المنتجات؛ تُسلَّم الدفعة الأولى عادةً خلال أسبوعين إلى أربعة أسابيع من استلام البيانات.'],
         ['هل يمكن عرض طقم كامل أو غرفة كاملة؟', 'نعم، يمكن نمذجة الأطقم والغرف كاملة، وتُحتسب بعدد الوحدات حسب درجة التعقيد.'],
         ['ماذا لو كان لدي متجر إلكتروني بالفعل؟', 'نوفّر باقة «الواقع المعزز فقط» لدمج التجربة في متجرك الحالي دون إعادة بنائه.'],
@@ -150,7 +150,7 @@ export const T = {
     ],
     services: {
       k: 'Service', h: 'Everything your showroom needs to sell with confidence',
-      lead: 'One team handles it all, from photographing the product to placing it in the customer’s home.',
+      lead: 'One team handles it all, from receiving your product photos and measurements to placing it in the customer’s home.',
       items: [
         ['cube', '3D modelling', 'Every product rebuilt as an accurate digital model with its real materials, colours and size.'],
         ['ar', 'AR integration', 'A “See it at home” button on every product page, working straight from the mobile browser.'],
@@ -164,7 +164,7 @@ export const T = {
       k: 'How it works', h: 'Five steps from contract to launch',
       steps: [
         ['Discovery meeting', 'We agree on the products, quantities and scope.'],
-        ['Photography & measuring', 'Professional photos and exact measurements of every piece.'],
+        ['Photos & measurements', 'You send photos and measurements of each piece, following a simple guide we provide.'],
         ['Modelling', 'We build the models and review them with you until approved.'],
         ['Integration', 'The experience goes live in your store and QR codes are prepared.'],
         ['Launch & care', 'Official launch, then monthly support and updates.'],
@@ -196,7 +196,7 @@ export const T = {
       k: 'FAQ', h: 'Clear answers',
       items: [
         ['Does the customer need to install an app?', 'No. The experience runs directly in the mobile browser on modern iOS and Android devices.'],
-        ['Who handles photography and measurements?', 'Our team visits your showroom to photograph and measure, or we work from photos and measurements you send following our guide.'],
+        ['What do you need from us to build the models?', 'Clear photos of each piece from several angles with its exact measurements. We send you a simple guide showing how to photograph and measure with a phone.'],
         ['How long does delivery take?', 'It depends on the number of products; the first batch is usually delivered within two to four weeks of receiving the data.'],
         ['Can you show a full set or a whole room?', 'Yes. Sets and full rooms can be modelled and are counted in units according to complexity.'],
         ['What if I already have an online store?', 'Our “AR only” package adds the experience to your existing store without rebuilding it.'],
