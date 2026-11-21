@@ -6,7 +6,7 @@ export const T = {
     brandSub: 'حلول المعاينة الافتراضية للأثاث',
     skip: 'تخطَّ إلى المحتوى',
     nav: { service: 'الخدمة', how: 'آلية العمل', packages: 'الباقات', try: 'جرّب الآن', blog: 'المقالات', contact: 'تواصل معنا' },
-    cta: 'اطلب عرضًا تقديميًا', menu: 'القائمة', close: 'إغلاق',
+    cta: 'تواصل مع شوفها', waMsg: 'مرحبًا شوفها، أرغب في معرفة المزيد عن خدمة المعاينة الافتراضية لمعرضي.', menu: 'القائمة', close: 'إغلاق',
     meta: {
       homeTitle: 'Choufha | حلول المعاينة الافتراضية لمعارض الأثاث',
       homeDesc: 'Choufha تحوّل منتجات معارض الأثاث إلى نماذج ثلاثية الأبعاد بالمقاس الحقيقي، يعاينها العميل داخل منزله بتقنية الواقع المعزز (AR) قبل الشراء.',
@@ -59,12 +59,12 @@ export const T = {
     try: {
       k: 'جرّب الآن', h: 'عاين القطعة بنفسك',
       lead: 'حرّك النموذج بإصبعك، غيّر الخامة، ثم اضغط «شوفها في بيتك» من هاتفك لتراها في غرفتك.',
-      swatches: [['oak', 'زان طبيعي'], ['walnut', 'جوز غامق'], ['velvet', 'رمادي قطيفة']],
+      swatches: [['white', 'أبيض'], ['charcoal', 'فحمي'], ['red', 'أحمر'], ['olive', 'زيتوني']],
       dimsOn: 'إظهار المقاسات', dimsOff: 'إخفاء المقاسات',
       ar: 'شوفها في بيتك',
       arNote: 'افتح هذه الصفحة من هاتفك الذكي لتجربة الواقع المعزز داخل غرفتك.',
-      dims: ['العرض 172 سم', 'الطول 201 سم', 'الارتفاع 120 سم'],
-      alt: 'سرير ثلاثي الأبعاد بالمقاس الحقيقي',
+      dims: ['العرض 86 سم', 'العمق 82 سم', 'الارتفاع 76 سم'],
+      alt: 'كرسي ثلاثي الأبعاد بالمقاس الحقيقي',
     },
     packages: {
       k: 'الباقات', h: 'باقات تناسب حجم معرضك',
@@ -120,7 +120,7 @@ export const T = {
     brandSub: 'AR Furniture Visualization',
     skip: 'Skip to content',
     nav: { service: 'Service', how: 'How it works', packages: 'Packages', try: 'Try it', blog: 'Insights', contact: 'Contact' },
-    cta: 'Book a demo', menu: 'Menu', close: 'Close',
+    cta: 'Contact Choufha', waMsg: 'Hello Choufha, I would like to know more about your AR visualization service for my showroom.', menu: 'Menu', close: 'Close',
     meta: {
       homeTitle: 'Choufha | AR Furniture Visualization for Showrooms',
       homeDesc: 'Choufha turns furniture showroom products into true-to-scale 3D models that customers place in their own homes with augmented reality before they buy.',
@@ -173,12 +173,12 @@ export const T = {
     try: {
       k: 'Try it', h: 'Explore the piece yourself',
       lead: 'Rotate the model, switch the finish, then tap “See it at home” on your phone to place it in your room.',
-      swatches: [['oak', 'Natural beech'], ['walnut', 'Dark walnut'], ['velvet', 'Grey velvet']],
+      swatches: [['white', 'White'], ['charcoal', 'Charcoal'], ['red', 'Red'], ['olive', 'Olive']],
       dimsOn: 'Show dimensions', dimsOff: 'Hide dimensions',
       ar: 'See it at home',
       arNote: 'Open this page on your smartphone to try augmented reality in your room.',
-      dims: ['Width 172 cm', 'Length 201 cm', 'Height 120 cm'],
-      alt: 'True-to-scale 3D bed',
+      dims: ['Width 86 cm', 'Depth 82 cm', 'Height 76 cm'],
+      alt: 'True-to-scale 3D armchair',
     },
     packages: {
       k: 'Packages', h: 'Packages sized to your showroom',

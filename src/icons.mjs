@@ -2,6 +2,7 @@ const s = (d, extra = '') => `<svg class="ico" viewBox="0 0 24 24" fill="none" s
 const f = (d) => `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${d}</svg>`;
 
 export const ICON = {
+  eye: '<svg class="ico eye-ico" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="23" fill="none" stroke="currentColor" stroke-width="11"/><circle cx="38.5" cy="26.5" r="8.5" fill="#1C1C1E"/></svg>',
   cube: s('<path d="M12 2.8 20.5 7.5v9L12 21.2 3.5 16.5v-9z"/><path d="M3.5 7.5 12 12.2l8.5-4.7M12 12.2v9"/>'),
   ar: s('<path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M12 7l5 2.7v5.6L12 18l-5-2.7V9.7z"/><path d="M7 9.7l5 2.7 5-2.7M12 12.4V18"/>'),
   store: s('<path d="M4 9.5V20h16V9.5"/><path d="M2.8 9.5 4.5 4h15l1.7 5.5a2.6 2.6 0 0 1-5 .6 2.6 2.6 0 0 1-4.6 0 2.6 2.6 0 0 1-4.6 0 2.6 2.6 0 0 1-4.2-.6z"/><path d="M9.5 20v-5.5h5V20"/>'),

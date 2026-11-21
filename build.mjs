@@ -3,6 +3,7 @@
 // Env: SITE_URL (default from config.json), BASE_PATH ('' for a custom domain, '/repo' for github.io/repo)
 import fs from 'node:fs';
 import path from 'node:path';
+import zlib from 'node:zlib';
 import { marked } from 'marked';
 import { T } from './src/i18n.mjs';
 import { ICON, SOCIAL } from './src/icons.mjs';
@@ -17,6 +18,8 @@ const VER = Date.now().toString(36);
 const u = (p) => BASE + p;                 // link inside the site
 const abs = (p) => SITE + p;               // absolute canonical URL
 const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const wa = (t) => cfg.whatsapp ? `https://wa.me/${cfg.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(t.waMsg)}` : null;
+const telHref = () => 'tel:' + (cfg.phoneLink || cfg.phone).replace(/\s/g, '');
 const pre = (lang) => (lang === 'ar' ? '' : '/en');
 
 /* ---------- content ---------- */
@@ -96,6 +99,7 @@ ${noindex ? '<meta name="robots" content="noindex">' : '<meta name="robots" cont
 <link rel="manifest" href="${u('/site.webmanifest')}">
 <link rel="preload" href="${u('/assets/fonts/readex-pro-' + (t.lang === 'ar' ? 'arabic' : 'latin') + '-400-normal.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${u('/assets/css/site.css')}?v=${VER}">
+<link rel="stylesheet" href="${u('/assets/css/extra.css')}?v=${VER}">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 ${extra}
 </head>`;
@@ -112,11 +116,11 @@ function header(t, { home = false, alt } = {}) {
   <div class="wrap">
     <a class="brand" href="${u(pre(t.lang) + '/')}" aria-label="Choufha">${wordmark()}<small>${t.brandSub}</small></a>
     <nav class="nav" id="nav" aria-label="${t.menu}">${links}
-      <a class="btn red sm nav-cta" href="${h}#contact">${t.cta}</a>
+      <a class="btn red sm nav-cta" href="${wa(t) || h + '#contact'}"${wa(t) ? ' target="_blank" rel="noopener"' : ''}>${wa(t) ? SOCIAL.whatsapp : ''}${t.cta}</a>
     </nav>
     <div class="head-tools">
       <a class="lang" href="${u(alt || pre(t.other) + '/')}" hreflang="${t.other}" lang="${t.other}">${t.otherLabel}</a>
-      <a class="btn red sm head-cta" href="${h}#contact">${t.cta}</a>
+      <a class="btn red sm head-cta" href="${wa(t) || h + '#contact'}"${wa(t) ? ' target="_blank" rel="noopener"' : ''}>${wa(t) ? SOCIAL.whatsapp : ''}${t.cta}</a>
       <button class="burger" type="button" aria-controls="nav" aria-expanded="false" aria-label="${t.menu}"><i></i><i></i><i></i></button>
     </div>
   </div>
@@ -150,7 +154,7 @@ function footer(t) {
       </div>
       <div class="foot-contact">
         <a class="mail" href="mailto:${cfg.email}" dir="ltr">${cfg.email.toUpperCase()}</a>
-        ${cfg.phone ? `<a href="tel:${cfg.phone.replace(/\s/g, '')}" dir="ltr">${esc(cfg.phone)}</a>` : ''}
+        ${cfg.phone ? `<a href="${telHref()}" dir="ltr">${esc(cfg.phone)}</a>` : ''}
         ${socialLinks()}
       </div>
     </div>
@@ -160,7 +164,7 @@ function footer(t) {
     </div>
   </div>
 </footer>
-${cfg.whatsapp ? `<a class="wa-float" href="https://wa.me/${cfg.whatsapp.replace(/\D/g, '')}" target="_blank" rel="noopener" aria-label="${t.contact.whatsapp}">${SOCIAL.whatsapp}</a>` : ''}
+${cfg.whatsapp ? `<a class="wa-float" href="${wa(t)}" target="_blank" rel="noopener" aria-label="${t.contact.whatsapp}">${SOCIAL.whatsapp}</a>` : ''}
 <script src="${u('/assets/js/main.js')}?v=${VER}" defer></script>
 </body>
 </html>`;
@@ -169,7 +173,7 @@ ${cfg.whatsapp ? `<a class="wa-float" href="https://wa.me/${cfg.whatsapp.replace
 const orgLD = () => ({
   '@context': 'https://schema.org', '@type': 'Organization', '@id': abs('/#org'),
   name: 'Choufha', alternateName: 'شوفها', url: abs('/'), logo: abs('/assets/img/logo-512.png'), email: cfg.email,
-  ...(cfg.phone ? { telephone: cfg.phone } : {}),
+  ...(cfg.phone ? { telephone: cfg.phoneLink || cfg.phone } : {}),
   parentOrganization: { '@type': 'Organization', name: 'REHLA Growth for Business Development & Marketing L.L.C', alternateName: 'رحلة النمو لتطوير الأعمال والتسويق ذ.م.م' },
   sameAs: Object.values(cfg.social || {}).filter(Boolean),
 });
@@ -258,20 +262,20 @@ ${header(t, { home: true })}
   <div class="wrap try-grid">
     <div class="try-text">
       <p class="kicker">${t.try.k}</p><h2>${t.try.h}</h2><p class="lead">${t.try.lead}</p>
-      <div class="swatches" id="sw" role="group">${t.try.swatches.map(([k, n], i) => `<button type="button" data-k="${k}" aria-pressed="${i === 0}"><i class="sw-${k}"></i>${n}</button>`).join('')}</div>
+      <div class="swatches" id="sw" role="group">${t.try.swatches.map(([k, n], i) => `<button type="button" data-k="${k}" aria-pressed="${i === 0}"><i class="sw sw-${k}"></i>${n}</button>`).join('')}</div>
       <div class="try-actions">
-        <button class="btn red" id="arBtn" type="button">${ICON.ar}${t.try.ar}</button>
+        <button class="btn red" id="arBtn" type="button">${ICON.eye}${t.try.ar}</button>
         <button class="btn ghost" id="dims" type="button" aria-pressed="false" data-on="${t.try.dimsOn}" data-off="${t.try.dimsOff}">${t.try.dimsOn}</button>
       </div>
       <p class="ar-note" id="arNote" hidden>${t.try.arNote}</p>
     </div>
     <div class="mv-stage" id="mvStage">
-      <model-viewer dir="ltr" id="mv" loading="lazy" reveal="auto" src="${u('/assets/models/bed.glb')}" alt="${t.try.alt}"
+      <model-viewer dir="ltr" id="mv" loading="lazy" reveal="auto" src="${u('/assets/models/sofa.glb')}" alt="${t.try.alt}"
         ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" camera-controls touch-action="pan-y" auto-rotate auto-rotate-delay="1500" rotation-per-second="18deg"
-        camera-orbit="-35deg 70deg auto" shadow-intensity="1" environment-image="neutral" exposure="1" interaction-prompt="none">
-        <button slot="hotspot-w" class="dim" data-position="0 0.02 1.08" data-normal="0 1 0">${t.try.dims[0]}</button>
-        <button slot="hotspot-l" class="dim" data-position="0.95 0.02 0" data-normal="0 1 0">${t.try.dims[1]}</button>
-        <button slot="hotspot-h" class="dim" data-position="0 1.22 -1" data-normal="0 1 0">${t.try.dims[2]}</button>
+        camera-orbit="-35deg 72deg auto" min-camera-orbit="auto 20deg auto" max-camera-orbit="auto 95deg auto" shadow-intensity="1" environment-image="neutral" exposure="1" interaction-prompt="none">
+        <button slot="hotspot-w" class="dim" data-position="0 0.02 0.5" data-normal="0 1 0">${t.try.dims[0]}</button>
+        <button slot="hotspot-l" class="dim" data-position="0.5 0.02 0" data-normal="0 1 0">${t.try.dims[1]}</button>
+        <button slot="hotspot-h" class="dim" data-position="0 0.8 -0.42" data-normal="0 1 0">${t.try.dims[2]}</button>
         <button slot="ar-button" hidden></button>
       </model-viewer>
     </div>
@@ -313,8 +317,8 @@ ${latest.length ? `<section class="band alt" id="insights">
       <p class="kicker">${t.contact.k}</p><h2>${t.contact.h}</h2><p class="lead">${t.contact.lead}</p>
       <ul class="c-list">
         <li><span>${t.contact.email}</span><a href="mailto:${cfg.email}" dir="ltr">${cfg.email.toUpperCase()}</a></li>
-        <li><span>${t.contact.phone}</span>${cfg.phone ? `<a href="tel:${cfg.phone.replace(/\s/g, '')}" dir="ltr">${esc(cfg.phone)}</a>` : `<em>${t.contact.phoneSoon}</em>`}</li>
-        ${cfg.whatsapp ? `<li><span>${t.contact.whatsapp}</span><a href="https://wa.me/${cfg.whatsapp.replace(/\D/g, '')}" dir="ltr">${esc(cfg.whatsapp)}</a></li>` : ''}
+        <li><span>${t.contact.phone}</span>${cfg.phone ? `<a href="${telHref()}" dir="ltr">${esc(cfg.phone)}</a>` : `<em>${t.contact.phoneSoon}</em>`}</li>
+        ${cfg.whatsapp ? `<li><span>${t.contact.whatsapp}</span><a href="${wa(t)}" target="_blank" rel="noopener" dir="ltr">${esc(cfg.whatsapp)}</a></li>` : ''}
       </ul>
       <p class="follow">${t.contact.follow}</p>
       ${socialLinks()}
@@ -330,8 +334,8 @@ ${latest.length ? `<section class="band alt" id="insights">
 </section>
 </main>
 <script type="module" src="${u('/assets/js/hero3d.js')}?v=${VER}" data-model="${u('/assets/models/sofa.glb')}"></script>
+<script>self.ModelViewerElement={meshoptDecoderLocation:${JSON.stringify(u('/assets/vendor/meshopt_decoder.js'))}}</script>
 <script type="module" src="${u('/assets/vendor/model-viewer.min.js')}"></script>
-<script>window.TRY_TEX={walnut:${JSON.stringify(u('/assets/models/wood_walnut.jpg'))},velvet:${JSON.stringify(u('/assets/models/fabric_gray.jpg'))}}</script>
 ` + footer(t);
 }
 
@@ -450,6 +454,25 @@ function write(p, html) {
 fs.mkdirSync(OUT, { recursive: true });
 for (const f of fs.readdirSync(OUT)) fs.rmSync(path.join(OUT, f), { recursive: true, force: true });
 fs.cpSync(path.join(ROOT, 'static'), OUT, { recursive: true });
+// meshopt decoder for model-viewer (the 3D models are meshopt-compressed)
+const meshoptOut = path.join(OUT, 'assets/vendor/meshopt_decoder.js');
+const meshoptLocal = path.join(ROOT, 'node_modules/meshoptimizer/meshopt_decoder.js');
+if (fs.existsSync(meshoptLocal)) fs.copyFileSync(meshoptLocal, meshoptOut);
+else {
+  try {
+    const r = await fetch('https://registry.npmjs.org/meshoptimizer/-/meshoptimizer-0.22.0.tgz');
+    if (!r.ok) throw new Error(r.status);
+    const tar = zlib.gunzipSync(Buffer.from(await r.arrayBuffer()));
+    for (let o = 0; o + 512 <= tar.length;) {
+      const name = tar.toString('utf8', o, o + 100).replace(/\0.*$/s, '');
+      const size = parseInt(tar.toString('utf8', o + 124, o + 136).replace(/\0.*$/s, '').trim() || '0', 8);
+      if (!name) break;
+      if (name === 'package/meshopt_decoder.js') { fs.writeFileSync(meshoptOut, tar.subarray(o + 512, o + 512 + size)); break; }
+      o += 512 + Math.ceil(size / 512) * 512;
+    }
+    if (!fs.existsSync(meshoptOut)) throw new Error('not found in package');
+  } catch (e) { console.warn('Could not fetch meshopt decoder:', e.message); }
+}
 if (fs.existsSync(path.join(ROOT, 'content/uploads'))) fs.cpSync(path.join(ROOT, 'content/uploads'), path.join(OUT, 'uploads'), { recursive: true });
 
 const articles = loadArticles();

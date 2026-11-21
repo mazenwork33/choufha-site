@@ -43,20 +43,23 @@
   // try-it section (model-viewer)
   const mv = d.getElementById('mv');
   if (mv) {
-    const sw = d.getElementById('sw'), tex = {}, ROUGH = { oak: .55, walnut: .5, velvet: .95 };
-    let frame = null;
-    mv.addEventListener('load', async () => {
+    const sw = d.getElementById('sw');
+    const COL = { white: [0.86, 0.87, 0.9, 1], charcoal: [0.12, 0.12, 0.13, 1], red: [0.55, 0.02, 0.04, 1], olive: [0.26, 0.31, 0.19, 1] };
+    const PIL = { white: null, charcoal: null, red: [0.1, 0.1, 0.11, 1], olive: null };
+    let fabric = null, pillow = null, pillow0 = null;
+    mv.addEventListener('load', () => {
       try {
-        frame = mv.model.getMaterialByName('Frame');
-        tex.oak = frame.pbrMetallicRoughness.baseColorTexture.texture;
-        for (const k of ['walnut', 'velvet']) tex[k] = await mv.createTexture(window.TRY_TEX[k]);
-      } catch (err) { /* textures optional */ }
+        fabric = mv.model.getMaterialByName('Fabric'); pillow = mv.model.getMaterialByName('Pillow');
+        pillow0 = pillow && pillow.pbrMetallicRoughness.baseColorFactor.slice();
+        fabric && fabric.pbrMetallicRoughness.setBaseColorFactor(COL.white);
+      } catch (err) { /* optional */ }
     });
     sw.addEventListener('click', (e) => {
       const b = e.target.closest('button'); if (!b) return;
       sw.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b));
       const k = b.dataset.k;
-      if (frame && tex[k]) { frame.pbrMetallicRoughness.baseColorTexture.setTexture(tex[k]); frame.pbrMetallicRoughness.setRoughnessFactor(ROUGH[k]); }
+      if (fabric) fabric.pbrMetallicRoughness.setBaseColorFactor(COL[k]);
+      if (pillow && pillow0) pillow.pbrMetallicRoughness.setBaseColorFactor(PIL[k] || pillow0);
     });
     const dims = d.getElementById('dims');
     dims.addEventListener('click', () => {
