@@ -142,7 +142,7 @@ const enc = (s) => b64(new TextEncoder().encode(s));
 const dec = (b64) => new TextDecoder().decode(Uint8Array.from(atob(b64.replace(/\s/g, '')), (c) => c.charCodeAt(0)));
 
 async function gh(path, opt = {}) {
-  const r = await fetch(`${API}/repos/${S.repo}/${path}`, { ...opt, headers: { Authorization: `Bearer ${S.token}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', ...(opt.body ? { 'Content-Type': 'application/json' } : {}) } });
+  const r = await fetch(`${API}/repos/${S.repo}${path ? '/' + path : ''}`, { ...opt, headers: { Authorization: `Bearer ${S.token}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', ...(opt.body ? { 'Content-Type': 'application/json' } : {}) } });
   if (r.status === 404 && opt.allow404) return null;
   if (!r.ok) { const j = await r.json().catch(() => ({})); throw new Error(`${r.status} ${j.message || ''}`); }
   return r.status === 204 ? null : r.json();
