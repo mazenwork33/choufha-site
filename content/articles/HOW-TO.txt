@@ -1,0 +1,13 @@
+Articles live here as Markdown files. Use the /admin page to add them, or create a file like:
+
+---
+title: Article title
+description: One sentence for Google (≤160 characters)
+lang: ar            # ar or en
+slug: article-url-name
+date: 2026-12-01
+cover: /uploads/cover.jpg
+tags: [AR, أثاث]
+draft: false
+---
+Body in Markdown...
